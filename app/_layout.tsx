@@ -1,37 +1,27 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Index from './index';
+import Test from './(tabs)/test';
+
+
+interface PropsIndex {
+  test: string
+}
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
+  const Stack = createNativeStackNavigator();
+  const test = "Will this work ??"
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <Stack.Navigator initialRouteName="index">
+        {/* <Stack.Screen name="index" component={Index} options={{ title: 'HAHA' }}> */}
+        <Stack.Screen name="index">
+          {(props: any) => <Index {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="wayyyy" component={Test} />
+    </Stack.Navigator>
+
   );
 }
