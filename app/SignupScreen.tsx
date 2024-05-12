@@ -1,9 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { View, TextInput, Button, StyleSheet, Text } from "react-native";
-// import { useDispatch } from 'react-redux';
-// import { AppDispatch } from '../store/store';
-// import { logout, setToken, signup } from '../store/userSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store/store';
+// import {  logout, setToken,} from '../store/userSlice';
+import { signup } from '../store/userSlice';
 // import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from "./_layout";
 import CustomTextInput from "@/components/IntroScreens/Input";
@@ -20,21 +21,10 @@ const SignupScreen = (props: Props) => {
   const [licensePlateError, setLicensePlateError] = useState<string | null>(
     null
   );
-  // const dispatch = useDispatch<AppDispatch>();
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSignup = () => {
-
-    
-    // dispatch(signup({username: username, password: password}))
-    console.log(
-        "Signing up with username:",
-        username,
-        "and password:",
-        password,
-        "and plate:",
-        licensePlate
-      );
-
     let hasError = false;
 
     if (!username) {
@@ -57,6 +47,15 @@ const SignupScreen = (props: Props) => {
       return;
     }
 
+    console.log(
+      "Signing up with username:",
+      username,
+      "and password:",
+      password,
+      "and plate:",
+      licensePlate
+    );
+    dispatch(signup({ username: username, password: password, licensePlate: licensePlate }));
   };
 
   // useEffect(() => {
