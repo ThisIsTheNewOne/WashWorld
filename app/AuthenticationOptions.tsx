@@ -22,7 +22,7 @@ const AuthenticationOptions: React.FC<Props>  = ({ navigation }) => {
           <Button title="LOG IN" onPress={() => navigation.navigate("LoginScreen")} color="white" />
         </View>
         <View style={[styles.buttonContainer, { backgroundColor: "#454646" }]}>
-          <Button title="SIGN IN" onPress={() => console.log("Sign In")} color="white"/>
+          <Button title="SIGN IN" onPress={() => navigation.navigate("SignupScreen")}  color="white"/>
         </View>
         <Button
           title="Contiune as guest"

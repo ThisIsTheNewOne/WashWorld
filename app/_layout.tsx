@@ -7,11 +7,13 @@ import AuthenticationOptions from "./AuthenticationOptions";
 import { useFonts } from 'expo-font';
 import { useEffect } from "react";
 import { SplashScreen } from "expo-router";
+import SignupScreen from "./SignupScreen";
 
 export type RootStackParamList = {
   InitialLoadingPage: undefined;
   AuthenticationOptions: undefined;
   LoginScreen: undefined;
+  SignupScreen: undefined;
   notFound: any;
   // index: { initialRouteName: string };
 };
@@ -43,7 +45,7 @@ export default function RootLayout() {
       {isSignedIn ? (
         <>
           <Stack.Navigator initialRouteName="AuthenticationOptions">
-            {/* <Stack.Screen name="AuthSignup" component={SignupScreen} /> */}
+            <Stack.Screen name="SignupScreen" component={SignupScreen} options={{  headerShown: false}} />
             <Stack.Screen name="InitialLoadingPage" component={InitialLoadingPage}  options={{ headerShown: false }} />
             <Stack.Screen name="AuthenticationOptions" component={AuthenticationOptions}  options={{ headerShown: false }} />
             <Stack.Screen name="LoginScreen" component={LoginScreen} options={{  headerShown: false}} />
