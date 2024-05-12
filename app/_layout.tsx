@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./LoginScreen";
-import Index from "./index";
 import Test from "./(tabs)/test";
 import InitialLoadingPage from "./InitialLoadingPage";
 import AuthenticationOptions from "./AuthenticationOptions";
@@ -45,9 +44,9 @@ export default function RootLayout() {
       {isSignedIn ? (
         <>
           <Stack.Navigator initialRouteName="AuthenticationOptions">
-            <Stack.Screen name="SignupScreen" component={SignupScreen} options={{  headerShown: false}} />
             <Stack.Screen name="InitialLoadingPage" component={InitialLoadingPage}  options={{ headerShown: false }} />
             <Stack.Screen name="AuthenticationOptions" component={AuthenticationOptions}  options={{ headerShown: false }} />
+            <Stack.Screen name="SignupScreen" component={SignupScreen}  />
             <Stack.Screen name="LoginScreen" component={LoginScreen} options={{  headerShown: false}} />
           </Stack.Navigator>
         </>

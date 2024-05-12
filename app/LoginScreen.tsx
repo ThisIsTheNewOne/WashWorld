@@ -1,17 +1,40 @@
 import { RootStackParamList } from "@/app/_layout";
+import CustomTextInput from "@/components/IntroScreens/Input";
+import CustomInput from "@/components/IntroScreens/Input";
+import { validatePassword } from "@/components/IntroScreens/ValidatePassword";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useState } from "react";
-import { View, TextInput, Text, Button, StyleSheet, Image } from "react-native";
+import { View, Button, StyleSheet, Image } from "react-native";
 
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const LoginScreen = (props: Props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [usernameError, setUsernameError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const handleLogin = () => {
+    setUsernameError(null);
+    setPasswordError(null);
     // dispatch(login({username: username, password: password}))
     console.log("THis is a login");
+    let hasError = false;
+
+    if (!username) {
+      setUsernameError("Username cannot be empty");
+      hasError = true;
+    }
+
+    const passError = validatePassword(password);
+    if (passError !== null) {
+      setPasswordError(passError);
+    }
+
+    if (hasError) {
+      // If there are errors, stop the signup process
+      return;
+    }
   };
 
   return (
@@ -25,34 +48,31 @@ const LoginScreen = (props: Props) => {
         source={require("@/assets/images/washWorld-logo.png")}
         style={styles.reactLogo}
       />
-      <View style={styles.inputContainer}> 
-        <View>
-            <Text style={styles.label}>Username</Text>
-            <TextInput
-            placeholder="Username"
-            value={username}
-            autoCapitalize="none"
-            onChangeText={setUsername}
-            style={styles.input}
-            />
-        </View>
-        
-        
-        <View>
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-            placeholder="Password"
-            secureTextEntry
-            value={password}
-            onChangeText={setPassword}
-            style={[styles.input, { color: '#000000', backgroundColor: '#cccccc' }]} 
-            />
-        </View>
-      
+      <View style={styles.inputContainer}>
+        <CustomTextInput
+          label="Username"
+          placeholder="Username"
+          value={username}
+          onChangeText={setUsername}
+          secureTextEntry={false}
+          error={usernameError}
+        />
+
+        <CustomTextInput
+          label="Password"
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={true}
+          error={passwordError}
+        />
       </View>
 
       <View style={styles.conatiner}></View>
       <Button title="Login" onPress={handleLogin} />
+      <View style={[styles.buttonContainer, { backgroundColor: "#0CEF78" }]}>
+        <Button title="Next" onPress={handleLogin} color="black" />
+      </View>
       {/* <Button title="Go to Signup" onPress={() => props.navigation.navigate("AuthSignup")} /> */}
     </View>
   );
@@ -89,20 +109,14 @@ const styles = StyleSheet.create({
     height: 80,
     marginTop: 20,
   },
-  input: {
+  buttonContainer: {
     width: 200,
-    height: 40,
-    padding: 10,
-    marginBottom: 10,
-    backgroundColor: '#ffffff',
-    color: '#000000', 
-    borderRadius: 5, 
-    borderWidth: 1, 
-    borderColor: '#cccccc', 
-  },
-  label: {
+    height: 60,
     marginBottom: 5,
-    color: '#ffffff', 
-    fontWeight: 'bold', 
+    backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    fontFamily: "GilroyBold",
   },
 });
