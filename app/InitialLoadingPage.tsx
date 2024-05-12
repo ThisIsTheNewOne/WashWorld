@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp } from "@react-navigation/native";
+import { Props } from "./index";
 
-const InitialLoadingPage = () => {
-  const navigation = useNavigation();
+
+
+const InitialLoadingPage: React.FC<Props>  = ({ navigation }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.navigate("LoginScreen");
-    }, 3000);
+     navigation.navigate("AuthenticationOptions");
+    }, 8000);
 
     return () => clearTimeout(timer);
   }, [navigation]);
@@ -45,6 +47,6 @@ const styles = StyleSheet.create({
   reactLogo: {
     height: 78,
     width: 190,
-    marginBottom: '40%',
+    marginBottom: "40%",
   },
 });

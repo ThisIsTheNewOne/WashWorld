@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { NavigationProp } from '@react-navigation/native';
 
-interface Props {
+export interface Props {
   navigation: NavigationProp<any, any>; 
 }
 
