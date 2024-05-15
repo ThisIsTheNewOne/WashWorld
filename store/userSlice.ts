@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { UserQueries } from '../api/userQueries';
 
+
 interface UserState {
     user: User | null;
     token: string | null;
