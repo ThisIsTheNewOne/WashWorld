@@ -4,6 +4,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../MainNavigation";
 import ClickableCard from "../../components/HomeScreen/ClickableCard";
 import FeatureCard from "../../components/HomeScreen/FeatureCard";
+import HelpCard from "../../screens/MainScreens/HelpCard"
 
 interface HomeScreenProps
   extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {
@@ -12,6 +13,12 @@ interface HomeScreenProps
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ user, navigation }) => {
   const existingUser = user ? user : "Guest";
+
+  const items = [
+    { img: "./img1.png", description: "Create membership" },
+    { img: "./img2.png", description: "Number plate recognition" },
+    { img: "./img3.png", description: "Stay in the car" },
+  ];
 
   const handleBalancePress = () => {
     // Navigate to the balance page
@@ -45,10 +52,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user, navigation }) => {
         </View>
       </View>
 
-      <View>
+      <View style={styles.container2}>
         <Text style={styles.header}>Choose Washing </Text>
-
-        <View style={styles.container2}>
+        <View>
           <View style={styles.row}>
             <FeatureCard
               title="Single"
@@ -64,6 +70,17 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user, navigation }) => {
               onPress={() => {}}
             />
           </View>
+        </View>
+
+        <View style={styles.container}>
+          <Text style={styles.header}>Need Help?</Text>
+          <HelpCard
+            title="UNLIMITED CAR WASHES"
+            subtitle="It's that easy"
+            items={items}
+            buttonText="Find More"
+            onPress={() => {}}
+          />
         </View>
       </View>
     </View>
@@ -81,10 +98,12 @@ const styles = StyleSheet.create({
   },
   container: {
     margin: 10,
+    marginBottom: 20,
   },
   container2: {
     margin: 15,
     marginRight: 15,
+    marginBottom: 20,
   },
   row: {
     flexDirection: "row",
