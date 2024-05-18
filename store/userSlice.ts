@@ -72,6 +72,12 @@ const userSlice = createSlice({
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
     },
+    logout: (state) => {
+      state.token = '';
+      console.log("test");
+      
+      SecureStore.deleteItemAsync('token')
+  },
   },
   extraReducers: (builder) => {
     builder
@@ -103,7 +109,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { setToken } = userSlice.actions;
+export const { setToken, logout } = userSlice.actions;
 // export const selectUser = (state: RootState) => state.user.user;
 // export const selectToken = (state: RootState) => state.user.token;
 // export const selectLoading = (state: RootState) => state.user.loading;

@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
-import { NavigationProp } from "@react-navigation/native";
-import { Props } from "./index";
-
+import { Props } from "./MainNavigation";
 
 
 const InitialLoadingPage: React.FC<Props>  = ({ navigation }) => {
@@ -18,11 +16,11 @@ const InitialLoadingPage: React.FC<Props>  = ({ navigation }) => {
   return (
     <View style={styles.conatiner}>
       <Image
-        source={require("@/assets/images/Background-Img.png")}
+        source={require("../assets/images/Background-Img.png")}
         style={styles.backgroundImage}
       />
       <Image
-        source={require("@/assets/images/washWorld-logo.png")}
+        source={require("../assets/images/washWorld-logo.png")}
         style={styles.reactLogo}
       />
     </View>

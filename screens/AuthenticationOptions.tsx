@@ -1,7 +1,15 @@
-import { RootStackParamList } from "@/app/_layout";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View, Button, StyleSheet, Image } from "react-native";
-import { Props } from "./index"
+import { Props } from "./MainNavigation";
+
+export type RootStackParamList = {
+  InitialLoadingPage: undefined;
+  AuthenticationOptions: undefined;
+  LoginScreen: undefined;
+  SignupScreen: undefined;
+  notFound: any;
+  // index: { initialRouteName: string };
+};
 
 type Props2 = NativeStackScreenProps<RootStackParamList>;
 
@@ -9,12 +17,12 @@ const AuthenticationOptions: React.FC<Props>  = ({ navigation }) => {
   return (
     <View style={styles.conatiner}>
       <Image
-        source={require("@/assets/images/Background-Img.png")}
+        source={require("../assets/images/Background-Img.png")}
         style={styles.backgroundImage}
       />
       <View style={styles.overlay} />
       <Image
-        source={require("@/assets/images/washWorld-logo.png")}
+        source={require("../assets/images/washWorld-logo.png")}
         style={styles.reactLogo}
       />
       <View style={styles.conatinerText}>

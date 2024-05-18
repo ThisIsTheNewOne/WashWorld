@@ -6,10 +6,13 @@ import { AppDispatch } from "../store/store";
 // import {  logout, setToken,} from '../store/userSlice';
 import { signup } from "../store/userSlice";
 // import * as SecureStore from 'expo-secure-store';
-import { RootStackParamList } from "./_layout";
-import CustomTextInput from "@/components/IntroScreens/Input";
-import { validatePassword } from "@/components/IntroScreens/ValidatePassword";
+// import { RootStackParamList } from "./_layout";
+// import CustomTextInput from "@/components/IntroScreens/Input";
+// import { validatePassword } from "@/components/IntroScreens/ValidatePassword";
 import Toast from 'react-native-toast-message';
+import { RootStackParamList } from "./MainNavigation";
+import { validatePassword } from "../components/IntroScreens/ValidatePassword";
+import CustomTextInput from "../components/IntroScreens/Input";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SignupScreen'>;
 

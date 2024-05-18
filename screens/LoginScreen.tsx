@@ -1,14 +1,13 @@
-import { RootStackParamList } from "@/app/_layout";
-import CustomTextInput from "@/components/IntroScreens/Input";
-import CustomInput from "@/components/IntroScreens/Input";
-import { validatePassword } from "@/components/IntroScreens/ValidatePassword";
-import { AppDispatch, RootState } from "@/store/store";
-import { login, setToken } from "@/store/userSlice";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { View, Button, Text, StyleSheet, ActivityIndicator, Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as SecureStore from 'expo-secure-store';
+import { RootStackParamList } from "./MainNavigation";
+import { AppDispatch, RootState } from "../store/store";
+import { login, setToken } from "../store/userSlice";
+import CustomTextInput from "../components/IntroScreens/Input";
+import { validatePassword } from "../components/IntroScreens/ValidatePassword";
 
 type Props = NativeStackScreenProps<RootStackParamList>;
 
@@ -66,12 +65,13 @@ const LoginScreen = (props: Props) => {
   return (
     <View style={styles.conatiner}>
       <Image
-        source={require("@/assets/images/Background-Img.png")}
+        // source={require("@/assets/images/Background-Img.png")}
+        source={require("../assets/images/Background-Img.png")}
         style={styles.backgroundImage}
       />
       <View style={styles.overlay} />
       <Image
-        source={require("@/assets/images/washWorld-logo.png")}
+        source={require("../assets/images/washWorld-logo.png")}
         style={styles.reactLogo}
       />
       <View style={styles.inputContainer}>
