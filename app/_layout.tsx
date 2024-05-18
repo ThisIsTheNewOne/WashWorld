@@ -7,12 +7,9 @@ import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { SplashScreen } from "expo-router";
 import SignupScreen from "./SignupScreen";
-import { Provider } from "react-redux";
-import { store } from "@/store/store";
-
-
-// import { AppDispatch } from '../store/store';
-// import { useDispatch } from 'react-redux';
+import { Provider, useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState, store } from "../store/store";
+import { NavigationContainer } from "@react-navigation/native";
 
 export type RootStackParamList = {
   InitialLoadingPage: undefined;
@@ -43,44 +40,43 @@ export default function RootLayout() {
     return null;
   }
 
+  const token = useSelector((state: RootState) => state.users.token);
+  // const isSignedIn = useSelector((state: RootState) => state.users.token);
   const isSignedIn = true;
-  // const dispatch = useDispatch<AppDispatch>();
 
   return (
-    <>
-      <Provider store={store}>
-        <>
-          {isSignedIn ? (
-            <>
-              <Stack.Navigator initialRouteName="AuthenticationOptions">
-                <Stack.Screen
-                  name="InitialLoadingPage"
-                  component={InitialLoadingPage}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="AuthenticationOptions"
-                  component={AuthenticationOptions}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen name="SignupScreen" component={SignupScreen} />
-                <Stack.Screen name="LoginScreen" component={LoginScreen} />
-              </Stack.Navigator>
-            </>
-          ) : (
-            <>
-              {/* <Stack.Navigator initialRouteName="index">
+    <Provider store={store}>
+   
+        {isSignedIn ? (
+          <>
+            <Stack.Navigator initialRouteName="AuthenticationOptions">
+              <Stack.Screen
+                name="InitialLoadingPage"
+                component={InitialLoadingPage}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="AuthenticationOptions"
+                component={AuthenticationOptions}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="SignupScreen" component={SignupScreen} />
+              <Stack.Screen name="LoginScreen" component={LoginScreen} />
+            </Stack.Navigator>
+          </>
+        ) : (
+          <>
+            {/* <Stack.Navigator initialRouteName="index">
               <Stack.Screen name="index" component={Index} options={{ title: 'HAHA' }} /> 
                <Stack.Screen name="index">
                 {(props: any) => <Index {...props} />}
               </Stack.Screen>
               <Stack.Screen name="+not-found" component={Test} />
             </Stack.Navigator> */}
-            </>
-          )}
-          <Stack.Screen name="notFound" component={Test} />
-        </>
-      </Provider>
-    </>
+          </>
+        )}
+        <Stack.Screen name="notFound" component={Test} />
+
+    </Provider>
   );
 }
