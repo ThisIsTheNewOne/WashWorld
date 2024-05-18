@@ -34,7 +34,7 @@ const AuthenticationOptions: React.FC<Props>  = ({ navigation }) => {
         </View>
         <Button
           title="Contiune as guest"
-          onPress={() => console.log("Contiune as a guest")}
+          onPress={() => navigation.navigate("GuestHome")}
           color="white"
         />
       </View>

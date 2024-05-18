@@ -10,17 +10,17 @@ import SignupScreen from "./SignupScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { NavigationContainer, NavigationProp } from "@react-navigation/native";
-import { Button } from 'react-native';
-import { logout } from '../store/userSlice';
+import { Button, View, Text } from "react-native";
+import { logout, selectUser } from "../store/userSlice";
 import HomeScreen from "./MainScreens/HomeScreen";
-
 
 export type RootStackParamList = {
   InitialLoadingPage: undefined;
   AuthenticationOptions: undefined;
   LoginScreen: undefined;
   SignupScreen: undefined;
-  HomeScreen: undefined;
+  HomeScreen: { user: string | null };
+  GuestHome: { user: string | null };
   notFound: any;
   // index: { initialRouteName: string };
 };
@@ -32,22 +32,24 @@ export interface Props {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
-const EntryStackNavigator = () => {
+const EntryStackNavigator = ({ user }: { user: string | null }) => {
   return (
     <Stack.Navigator>
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        {/* <Stack.Screen name="EntryEdit" component={EntryEditScreen} />
-        <Stack.Screen name="EntryDelete" component={EntryDeleteScreen} /> */}
-      </Stack.Navigator>
-  )
-}
-
+      <Stack.Screen name="HomeScreen" options={{ headerShown: false }}>
+        {(props) => <HomeScreen {...props} user={user} />}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+};
 
 export default function MainNavigation() {
   // const colorScheme = useColorScheme();
   const dispatch = useDispatch<AppDispatch>();
   const isSignedIn = useSelector((state: RootState) => state.users.token);
- 
+  const testUser = useSelector((state: RootState) => state.users.user);
+  const testUserString: any | null = testUser ? testUser : null;
+
+  console.log("This is the user in the end", testUser);
 
   return (
     <NavigationContainer>
@@ -56,11 +58,16 @@ export default function MainNavigation() {
           <Tab.Navigator
             screenOptions={({ navigation }) => ({
               headerRight: () => (
-                <Button title="Logout" onPress={() => dispatch(logout())} />
+                <>
+                  <Button title="Logout" onPress={() => dispatch(logout())} />
+                  <View>{testUserString !== null && <Text>{testUserString}</Text>}</View>
+                </>
               ),
             })}
           >
-            <Tab.Screen name="Home" component={EntryStackNavigator} />
+            <Tab.Screen name="Home">
+              {(props) => <EntryStackNavigator {...props} user={testUserString} />}
+            </Tab.Screen>
             {/* <Tab.Screen name="Settings" component={Categories} /> */}
           </Tab.Navigator>
         </>
@@ -80,11 +87,13 @@ export default function MainNavigation() {
               />
               <Stack.Screen name="SignupScreen" component={SignupScreen} />
               <Stack.Screen name="LoginScreen" component={LoginScreen} />
+              <Stack.Screen name="GuestHome">
+                {(props) => <EntryStackNavigator {...props} user={null} />}
+              </Stack.Screen>
             </Stack.Navigator>
           </>
         </>
       )}
-      {/* <Stack.Screen name="notFound" component={Test} /> */}
     </NavigationContainer>
   );
 }
