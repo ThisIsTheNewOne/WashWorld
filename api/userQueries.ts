@@ -11,7 +11,7 @@ export class UserQueries extends SuperQueries {
     licensePlate: string
   ) {
     // const hashedPassword = sha256(password);
-    const testPassword =  password
+    const testPassword = password;
 
     try {
       const response = await axios.post(this.baseUrl + "signup", {
@@ -21,12 +21,17 @@ export class UserQueries extends SuperQueries {
       });
       console.log("userQueries", response.data);
 
-      return response.data;
-    } catch (error) {
+      if (response.data.statusCode === 400) {
+        console.error("Username already exists");
+        // throw new Error("Username already exists");
+        return "Username already exists"
+      } else if (response.data.statusCode === 200) {
+        return response.data;
+      }
+    } catch (error: any) {
       // Handle errors
-      console.error("Error signing up:",this.baseUrl + "signup", error);
+      console.error("Error signing up:", this.baseUrl + "signup", error);
       throw new Error("Failed to sign up");
     }
-
   }
 }

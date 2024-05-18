@@ -9,6 +9,8 @@ import { SplashScreen } from "expo-router";
 import SignupScreen from "./SignupScreen";
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
+
+
 // import { AppDispatch } from '../store/store';
 // import { useDispatch } from 'react-redux';
 

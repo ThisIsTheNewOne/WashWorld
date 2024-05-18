@@ -1,18 +1,19 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { View, TextInput, Button, StyleSheet, Text } from "react-native";
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store/store';
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store/store";
 // import {  logout, setToken,} from '../store/userSlice';
-import { signup } from '../store/userSlice';
+import { signup } from "../store/userSlice";
 // import * as SecureStore from 'expo-secure-store';
 import { RootStackParamList } from "./_layout";
 import CustomTextInput from "@/components/IntroScreens/Input";
 import { validatePassword } from "@/components/IntroScreens/ValidatePassword";
+import Toast from 'react-native-toast-message';
 
-type Props = NativeStackScreenProps<RootStackParamList>;
+type Props = NativeStackScreenProps<RootStackParamList, 'SignupScreen'>;
 
-const SignupScreen = (props: Props) => {
+const SignupScreen: React.FC<Props> = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [licensePlate, setLicensePlate] = useState("");
@@ -24,7 +25,8 @@ const SignupScreen = (props: Props) => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
+    setUsernameError(null);
     let hasError = false;
 
     if (!username) {
@@ -46,28 +48,39 @@ const SignupScreen = (props: Props) => {
       return;
     }
 
-    console.log(
-      "Signing up with username:",
-      username,
-      "and password:",
-      password,
-      "and plate:",
-      licensePlate
-    );
-    dispatch(signup({ username: username, password: password, licensePlate: licensePlate }));
+    try {
+      const result = await dispatch(
+        signup({ username, password, licensePlate })
+      );
+      const payload = result.payload; // Extract payload
+      console.log("Signup result payload:", payload);
+      if (payload.statusCode !== null && payload.statusCode === 200) {
+        console.log("hahah", "User created successfully");
+        Toast.show({
+            type: 'success',
+            text1: 'Signup Complete',
+            text2: 'You can navigate back to the login page or you will be redirected in 15 seconds',
+            visibilityTime: 15000, 
+            autoHide: true,
+            topOffset: 30,
+          });
+          setTimeout(() => {
+            navigation.navigate('LoginScreen'); 
+          }, 15000);
+        // navigation.navigate("AuthenticationOptions");
+      } else if (payload === "Username already exists") {
+        setUsernameError("Username already exists");
+      }
+    } catch (error) {
+      console.error("Error signing up:", error);
+    }
   };
 
-  // useEffect(() => {
-  //     async function load() {
-  //         const token = await SecureStore.getItemAsync('token');
-  //         console.log("read token from SecureStore", token);
-  //         dispatch(setToken(token || ''))
-  //     }
-  //     load()
-  // }, [])
 
   return (
     <View style={styles.container}>
+     <Toast />
+
       <CustomTextInput
         label="Username"
         placeholder="Username"
@@ -96,12 +109,11 @@ const SignupScreen = (props: Props) => {
         optionalInfo="We need your plate for recognizing your car when you arrive"
       />
 
-      {/* {error && <Text style={styles.errorText}>{error}</Text>} */}
 
       <View style={[styles.buttonContainer, { backgroundColor: "#0CEF78" }]}>
         <Button title="Next" onPress={handleSignup} color="black" />
       </View>
-      {/* <Text style={styles.loginText} onPress={() => props.navigation.navigate("AuthLogin")}>Go to Login</Text> */}
+
     </View>
   );
 };
