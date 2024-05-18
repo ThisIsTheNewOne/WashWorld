@@ -23,15 +23,19 @@ export class UserQueries extends SuperQueries {
 
       if (response.data.statusCode === 400) {
         console.error("Username already exists");
-        // throw new Error("Username already exists");
-        return "Username already exists"
+        return "Username already exists";
       } else if (response.data.statusCode === 200) {
         return response.data;
       }
     } catch (error: any) {
-      // Handle errors
       console.error("Error signing up:", this.baseUrl + "signup", error);
       throw new Error("Failed to sign up");
     }
   }
+
+  static async login(username: string, password: string) {    
+    const response = await axios.post(this.baseUrl + "login", { username, password } )
+    return response.data;
+  }
+
 }
