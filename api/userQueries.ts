@@ -10,11 +10,13 @@ export class UserQueries extends SuperQueries {
     password: string,
     licensePlate: string
   ) {
-    const hashedPassword = sha256(password);
+    // const hashedPassword = sha256(password);
+    const testPassword =  password
+
     try {
       const response = await axios.post(this.baseUrl + "signup", {
         username,
-        password: hashedPassword,
+        password: testPassword,
         licensePlate,
       });
       console.log("userQueries", response.data);
@@ -22,8 +24,9 @@ export class UserQueries extends SuperQueries {
       return response.data;
     } catch (error) {
       // Handle errors
-      console.error("Error signing up:", error);
+      console.error("Error signing up:",this.baseUrl + "signup", error);
       throw new Error("Failed to sign up");
     }
+
   }
 }

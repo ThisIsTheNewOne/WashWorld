@@ -43,7 +43,6 @@ const SignupScreen = (props: Props) => {
     }
 
     if (hasError) {
-      // If there are errors, stop the signup process
       return;
     }
 
