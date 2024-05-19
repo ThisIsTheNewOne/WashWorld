@@ -3,11 +3,17 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     mainContainer: {
       backgroundColor: "black",
+      paddingTop: 100,
       width: "100%",
       height: "100%",
       color: "white",
       justifyContent: "center",
       alignItems: "center",
+      
+    },
+    mainHeader: {
+     display: "flex",
+     flexDirection: "row"
     },
     profileContainer: {
       position: "relative",

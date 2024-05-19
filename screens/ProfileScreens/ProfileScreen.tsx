@@ -77,11 +77,50 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, user }) => {
           visible={signInModalVisible}
           onRequestClose={() => setSignInModalVisible(false)}
         >
-          <SignInScreen 
+        <SignInScreen 
           title= "Sign in & security"
+          sections={[
+            { title: "Email address", content: "For now you don't have any email address" },
+            { title: "Change Password", content: "For now you don't have any email address" },
+            { title: "Phone Number", content: "For now you don't have any email address" },
+            { title: "Devices that remember your password", content: "For now you don't have any email address" },
+            { title: "Two-step verification", content: "For now you don't have any email address" }
+          ]}
           onPress={setSignInModalVisible}/>
         </Modal>
+
         <Modal
+          visible={notificationsModalVisible}
+          onRequestClose={() => setNotificationsModalVisible(false)}
+        >
+        <SignInScreen 
+          title= "Notifications"
+          sections={[
+            { title: "Duration of a wash", content: "For now you don't have any email address" },
+            { title: "Car wash reminder ", content: "For now you don't have any email address" },
+            { title: "Availability ", content: "For now you don't have any email address" },
+            { title: "Special offers", content: "For now you don't have any email address" },
+          ]}
+          onPress={setNotificationsModalVisible}/>
+        </Modal>
+
+        <Modal
+          visible={membershipModalVisible}
+          onRequestClose={() => setMembershipModalVisible(false)}
+        >
+        <SignInScreen 
+          title= "Notifications"
+          sections={[
+            { title: "Basic", content: "For now you don't have any email address" },
+            { title: "Gold", content: "For now you don't have any email address" },
+            { title: "Premium", content: "For now you don't have any email address" },
+            { title: "Premium Plus", content: "For now you don't have any email address" },
+            { title: "All Inclusive", content: "For now you don't have any email address" },
+          ]}
+          onPress={setMembershipModalVisible}/>
+        </Modal>
+
+        {/* <Modal
           visible={notificationsModalVisible}
           onRequestClose={() => setNotificationsModalVisible(false)}
         >
@@ -90,17 +129,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, user }) => {
             title="Close"
             onPress={() => setNotificationsModalVisible(false)}
           />
-        </Modal>
-        <Modal
-          visible={membershipModalVisible}
-          onRequestClose={() => setMembershipModalVisible(false)}
-        >
-          <MembershipScreen />
-          <Button
-            title="Close"
-            onPress={() => setMembershipModalVisible(false)}
-          />
-        </Modal>
+        </Modal> */}
         <AppVersion />
       </>
     </View>
