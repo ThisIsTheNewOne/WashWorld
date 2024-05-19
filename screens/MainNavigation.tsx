@@ -13,6 +13,12 @@ import { NavigationContainer, NavigationProp } from "@react-navigation/native";
 import { Button, View, Text } from "react-native";
 import { logout, selectUser } from "../store/userSlice";
 import HomeScreen from "./MainScreens/HomeScreen";
+// import Profile from "../screens/ProfileScreens/ProfileScreen"
+import React from "react";
+import StoresScreen from "./StoresScreen";
+import RewardsScreen from "./RewardsScreen";
+import ProfileScreen from "./ProfileScreens/ProfileScreen";
+
 
 export type RootStackParamList = {
   InitialLoadingPage: undefined;
@@ -20,7 +26,10 @@ export type RootStackParamList = {
   LoginScreen: undefined;
   SignupScreen: undefined;
   HomeScreen: { user: string | null };
+  Rewards: undefined;
+  StoresScreen: undefined;
   GuestHome: { user: string | null };
+  Profile: { user: string | null };
   notFound: any;
   // index: { initialRouteName: string };
 };
@@ -68,7 +77,11 @@ export default function MainNavigation() {
             <Tab.Screen name="Home">
               {(props) => <EntryStackNavigator {...props} user={testUserString} />}
             </Tab.Screen>
-            {/* <Tab.Screen name="Settings" component={Categories} /> */}
+            <Tab.Screen name="Stores" component={StoresScreen} options={{ headerShown: false }} />
+            <Tab.Screen name="Rewards" component={RewardsScreen} options={{ headerShown: false }} />
+            <Tab.Screen name="Profile" >
+              {(props) => <ProfileScreen {...props} user={testUserString} />}
+            </Tab.Screen>
           </Tab.Navigator>
         </>
       ) : (

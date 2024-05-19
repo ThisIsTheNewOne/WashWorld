@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../MainNavigation";
 import ClickableCard from "../../components/HomeScreen/ClickableCard";
 import FeatureCard from "../../components/HomeScreen/FeatureCard";
 import HelpCard from "../../screens/MainScreens/HelpCard"
+import { RootStackParamList } from "../MainNavigation";
 
 interface HomeScreenProps
   extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {
