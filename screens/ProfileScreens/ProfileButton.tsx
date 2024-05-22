@@ -1,74 +1,50 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import BottomBar from "../../assets/svg/BottomBar";
 
 interface AvatarPicture {
   title: string;
   onPress: any;
+  icon: (props: {
+    width?: number | undefined;
+    height?: number | undefined;
+  }) => React.JSX.Element;
 }
 
 export const ProfileButton = (props: AvatarPicture) => {
-  const { title, onPress } = props;
+  const { title, onPress, icon: Icon } = props;
 
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.profileContainer}>
-        <Text style={styles.title}>{title}</Text>
+        <View style={styles.component}>
+          <Icon width={20} height={20} />
+          <Text style={styles.title}>{title}</Text>
+        </View>
+        <BottomBar style={styles.bottomBar} />
       </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    backgroundColor: "black",
-    width: "100%",
-    height: "100%",
-    color: "white",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   profileContainer: {
-    position: "relative",
-    marginBottom: 20,
+    margin: 10,
   },
-  profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-  initialsContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    justifyContent: "center",
-    alignItems: "center",
+  component: {
+    paddingLeft: 30,
+    display:"flex",
+    flexDirection: "row",
+    backgroundColor: "#666666",
+    padding: 13,
   },
   title: {
+    marginLeft: 15,
     fontSize: 20,
     color: "white",
+    // backgroundColor: "#666666",
+    // padding: 13,
   },
-  cameraButton: {
-    position: "absolute",
-    bottom: 0,
-    right: 0,
-    backgroundColor: "white",
-    borderRadius: 15,
-    padding: 5,
-  },
-  cameraText: {
-    fontSize: 18,
-  },
-  userName: {
-    margin: 10,
-    marginBottom: 20,
-    color: "white",
-  },
-  camera: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonContainer: {
-    backgroundColor: "#fff",
-    alignSelf: "flex-end",
+  bottomBar: {
+    marginTop: 0,
   },
 });

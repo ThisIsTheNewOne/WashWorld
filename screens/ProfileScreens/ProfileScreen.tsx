@@ -16,6 +16,8 @@ import { AppVersion } from "./AppVersion";
 import { SignInScreen } from "./ProfileModals/SignInScreen";
 import { NotificationsScreen } from "./ProfileModals/NotificationsScreen";
 import { MembershipScreen } from "./ProfileModals/MembershipScreen";
+import UserIcon from "../../assets/svg/User";
+import Notification from "../../assets/svg/Notification";
 
 interface ProfileScreenProps
   extends NativeStackScreenProps<RootStackParamList> {
@@ -45,14 +47,17 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, user }) => {
     {
       title: "Sign in & security",
       onPress: handleSignIn,
+      icon: UserIcon,
     },
     {
       title: "Notifications",
       onPress: handleNotification,
+      icon: Notification,
     },
     {
       title: "Membership",
       onPress: handleMembership,
+      icon: Notification,
     },
   ];
 
@@ -69,6 +74,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, user }) => {
             <ProfileButton
               key={index}
               title={item.title}
+              icon={item.icon}
               onPress={item.onPress}
             />
           )}
@@ -77,47 +83,92 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, user }) => {
           visible={signInModalVisible}
           onRequestClose={() => setSignInModalVisible(false)}
         >
-        <SignInScreen 
-          title= "Sign in & security"
-          sections={[
-            { title: "Email address", content: "For now you don't have any email address" },
-            { title: "Change Password", content: "For now you don't have any email address" },
-            { title: "Phone Number", content: "For now you don't have any email address" },
-            { title: "Devices that remember your password", content: "For now you don't have any email address" },
-            { title: "Two-step verification", content: "For now you don't have any email address" }
-          ]}
-          onPress={setSignInModalVisible}/>
+          <SignInScreen
+            title="Sign in & security"
+            sections={[
+              {
+                title: "Email address",
+                content: "For now you don't have any email address",
+              },
+              {
+                title: "Change Password",
+                content: "For now you don't have any email address",
+              },
+              {
+                title: "Phone Number",
+                content: "For now you don't have any email address",
+              },
+              {
+                title: "Devices that remember your password",
+                content: "For now you don't have any email address",
+              },
+              {
+                title: "Two-step verification",
+                content: "For now you don't have any email address",
+              },
+            ]}
+            onPress={setSignInModalVisible}
+          />
         </Modal>
 
         <Modal
           visible={notificationsModalVisible}
           onRequestClose={() => setNotificationsModalVisible(false)}
         >
-        <SignInScreen 
-          title= "Notifications"
-          sections={[
-            { title: "Duration of a wash", content: "For now you don't have any email address" },
-            { title: "Car wash reminder ", content: "For now you don't have any email address" },
-            { title: "Availability ", content: "For now you don't have any email address" },
-            { title: "Special offers", content: "For now you don't have any email address" },
-          ]}
-          onPress={setNotificationsModalVisible}/>
+          <SignInScreen
+            title="Notifications"
+            sections={[
+              {
+                title: "Duration of a wash",
+                content: "For now you don't have any email address",
+              },
+              {
+                title: "Car wash reminder ",
+                content: "For now you don't have any email address",
+              },
+              {
+                title: "Availability ",
+                content: "For now you don't have any email address",
+              },
+              {
+                title: "Special offers",
+                content: "For now you don't have any email address",
+              },
+            ]}
+            onPress={setNotificationsModalVisible}
+          />
         </Modal>
 
         <Modal
           visible={membershipModalVisible}
           onRequestClose={() => setMembershipModalVisible(false)}
         >
-        <SignInScreen 
-          title= "Notifications"
-          sections={[
-            { title: "Basic", content: "For now you don't have any email address" },
-            { title: "Gold", content: "For now you don't have any email address" },
-            { title: "Premium", content: "For now you don't have any email address" },
-            { title: "Premium Plus", content: "For now you don't have any email address" },
-            { title: "All Inclusive", content: "For now you don't have any email address" },
-          ]}
-          onPress={setMembershipModalVisible}/>
+          <SignInScreen
+            title="Notifications"
+            sections={[
+              {
+                title: "Basic",
+                content: "For now you don't have any email address",
+              },
+              {
+                title: "Gold",
+                content: "For now you don't have any email address",
+              },
+              {
+                title: "Premium",
+                content: "For now you don't have any email address",
+              },
+              {
+                title: "Premium Plus",
+                content: "For now you don't have any email address",
+              },
+              {
+                title: "All Inclusive",
+                content: "For now you don't have any email address",
+              },
+            ]}
+            onPress={setMembershipModalVisible}
+          />
         </Modal>
 
         {/* <Modal

@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     },
     mainHeader: {
      display: "flex",
-     flexDirection: "row"
+     flexDirection: "row",
     },
     profileContainer: {
       position: "relative",
