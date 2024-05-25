@@ -5,6 +5,10 @@ import ClickableCard from "../../components/HomeScreen/ClickableCard";
 import FeatureCard from "../../components/HomeScreen/FeatureCard";
 import HelpCard from "../../screens/MainScreens/HelpCard"
 import { RootStackParamList } from "../MainNavigation";
+// import Icon1 from "../../assets/svg/HelpIcon1.svg";
+// import Icon2 from "../../assets/svg/HelpIcon2.svg";
+// import Icon3 from "../../assets/svg/HelpIcon3.svg";
+
 
 interface HomeScreenProps
   extends NativeStackScreenProps<RootStackParamList, "HomeScreen"> {
@@ -15,9 +19,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ user, navigation }) => {
   const existingUser = user ? user : "Guest";
 
   const items = [
-    { img: "./img1.png", description: "Create membership" },
-    { img: "./img2.png", description: "Number plate recognition" },
-    { img: "./img3.png", description: "Stay in the car" },
+    { img: "../../assets/svg/HelpIcon1.svg", description: "Create membership" },
+    { img: "../../assets/svg/HelpIcon1.svg", description: "Number plate recognition" },
+    { img: "../../assets/svg/HelpIcon1.svg", description: "Stay in the car" },
   ];
 
   const handleBalancePress = () => {

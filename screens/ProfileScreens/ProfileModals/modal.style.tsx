@@ -2,18 +2,33 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     mainContainer: {
-      backgroundColor: "black",
-      paddingTop: 100,
+      backgroundColor: "#333333",
+      paddingTop: 50,
       width: "100%",
-      height: "100%",
+      height: "auto",
       color: "white",
-      justifyContent: "center",
+      justifyContent: "flex-end", 
       alignItems: "center",
-      
+    },
+    box: {
+      backgroundColor: "#666666",
+      height: "93%",
+    },
+    container: {
+      paddingTop: 30,
+      padding: 10,
+      paddingBottom: 30,
+    },
+    subTitle: {
+      fontSize: 25,
+      color: "white",
     },
     mainHeader: {
      display: "flex",
      flexDirection: "row",
+    },
+    emptyTopSpace: {
+      marginTop: 0
     },
     profileContainer: {
       position: "relative",

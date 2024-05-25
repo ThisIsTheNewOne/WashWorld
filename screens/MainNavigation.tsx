@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { NavigationContainer, NavigationProp } from "@react-navigation/native";
 import { Button, View, Text } from "react-native";
-import { logout, selectUser } from "../store/userSlice";
+import { User, logout, selectUser } from "../store/userSlice";
 import HomeScreen from "./MainScreens/HomeScreen";
 // import Profile from "../screens/ProfileScreens/ProfileScreen"
 import React from "react";
@@ -29,7 +29,7 @@ export type RootStackParamList = {
   Rewards: undefined;
   StoresScreen: undefined;
   GuestHome: { user: string | null };
-  Profile: { user: string | null };
+  Profile: { user: string | null, fullUser: User };
   notFound: any;
   // index: { initialRouteName: string };
 };
@@ -55,10 +55,10 @@ export default function MainNavigation() {
   // const colorScheme = useColorScheme();
   const dispatch = useDispatch<AppDispatch>();
   const isSignedIn = useSelector((state: RootState) => state.users.token);
-  const testUser = useSelector((state: RootState) => state.users.user);
+  const testUser = useSelector((state: RootState) => state.users.user?.username);
+  const fullUser =  useSelector((state: RootState) => state.users.user);
   const testUserString: any | null = testUser ? testUser : null;
 
-  console.log("This is the user in the end", testUser);
 
   return (
     <NavigationContainer>
@@ -80,7 +80,7 @@ export default function MainNavigation() {
             <Tab.Screen name="Stores" component={StoresScreen} options={{ headerShown: false }} />
             <Tab.Screen name="Rewards" component={RewardsScreen} options={{ headerShown: false }} />
             <Tab.Screen name="Profile" >
-              {(props) => <ProfileScreen {...props} user={testUserString} />}
+              {(props) => <ProfileScreen {...props} user={testUserString} fullUser={fullUser} />}
             </Tab.Screen>
           </Tab.Navigator>
         </>

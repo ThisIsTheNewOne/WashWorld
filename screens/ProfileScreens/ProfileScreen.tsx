@@ -18,18 +18,28 @@ import { NotificationsScreen } from "./ProfileModals/NotificationsScreen";
 import { MembershipScreen } from "./ProfileModals/MembershipScreen";
 import UserIcon from "../../assets/svg/User";
 import Notification from "../../assets/svg/Notification";
+import { User } from "../../store/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfilePicture } from "../../store/profilePhotoSlice";
+import { AppDispatch, RootState } from "../../store/store";
 
 interface ProfileScreenProps
   extends NativeStackScreenProps<RootStackParamList> {
   user: string | null;
+  fullUser: User | null;
 }
 
-const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, user }) => {
+const ProfileScreen: React.FC<ProfileScreenProps> = ({
+  navigation,
+  user,
+  fullUser,
+}) => {
   const currentUser = user ? user : "Guest";
   const [signInModalVisible, setSignInModalVisible] = useState(false);
   const [notificationsModalVisible, setNotificationsModalVisible] =
     useState(false);
   const [membershipModalVisible, setMembershipModalVisible] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSignIn = () => {
     setSignInModalVisible(true);
@@ -61,12 +71,21 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, user }) => {
     },
   ];
 
+
+  useEffect(() => {
+    if (fullUser !== null) {
+        const userId = String(fullUser.id); 
+        console.log("this is it bro", userId)
+        dispatch(getProfilePicture(userId));
+    }
+}, [dispatch, fullUser]);
+
   return (
     <View style={styles.mainContainer}>
       <Text>Profile</Text>
 
       <>
-        <AvatarPicture user={currentUser} />
+        <AvatarPicture user={currentUser} fullUser={fullUser} />
         <Text style={styles.userName}>{currentUser}</Text>
         <FlatList
           data={buttonsData}
@@ -85,6 +104,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation, user }) => {
         >
           <SignInScreen
             title="Sign in & security"
+            subTitle="Account Access"
             sections={[
               {
                 title: "Email address",
