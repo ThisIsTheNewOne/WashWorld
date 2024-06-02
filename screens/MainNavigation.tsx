@@ -18,6 +18,10 @@ import React from "react";
 import StoresScreen from "./StoresScreen";
 import RewardsScreen from "./RewardsScreen";
 import ProfileScreen from "./ProfileScreens/ProfileScreen";
+import Octicons from "@expo/vector-icons/Octicons";
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Feather from '@expo/vector-icons/Feather';
+import { TouchableOpacity } from 'react-native';
 
 
 export type RootStackParamList = {
@@ -29,7 +33,7 @@ export type RootStackParamList = {
   Rewards: undefined;
   StoresScreen: undefined;
   GuestHome: { user: string | null };
-  Profile: { user: string | null, fullUser: User };
+  Profile: { user: string | null; fullUser: User };
   notFound: any;
   // index: { initialRouteName: string };
 };
@@ -55,10 +59,11 @@ export default function MainNavigation() {
   // const colorScheme = useColorScheme();
   const dispatch = useDispatch<AppDispatch>();
   const isSignedIn = useSelector((state: RootState) => state.users.token);
-  const testUser = useSelector((state: RootState) => state.users.user?.username);
-  const fullUser =  useSelector((state: RootState) => state.users.user);
+  const testUser = useSelector(
+    (state: RootState) => state.users.user?.username
+  );
+  const fullUser = useSelector((state: RootState) => state.users.user);
   const testUserString: any | null = testUser ? testUser : null;
-
 
   return (
     <NavigationContainer>
@@ -68,19 +73,63 @@ export default function MainNavigation() {
             screenOptions={({ navigation }) => ({
               headerRight: () => (
                 <>
-                  <Button title="Logout" onPress={() => dispatch(logout())} />
-                  <View>{testUserString !== null && <Text>{testUserString}</Text>}</View>
+                  <TouchableOpacity onPress={() => dispatch(logout())}>
+                    <Feather name="log-out" size={24} color="black" />
+                  </TouchableOpacity>
+                  <View>
+                    {testUserString !== null && <Text>{testUserString}</Text>}
+                  </View>
                 </>
               ),
             })}
           >
-            <Tab.Screen name="Home">
-              {(props) => <EntryStackNavigator {...props} user={testUserString} />}
+            <Tab.Screen
+              name="Home"
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Octicons name="home" size={24} color="black" />
+                ),
+              }}
+            >
+              {(props) => (
+                <EntryStackNavigator {...props} user={testUserString} />
+              )}
             </Tab.Screen>
-            <Tab.Screen name="Stores" component={StoresScreen} options={{ headerShown: false }} />
-            <Tab.Screen name="Rewards" component={RewardsScreen} options={{ headerShown: false }} />
-            <Tab.Screen name="Profile" >
-              {(props) => <ProfileScreen {...props} user={testUserString} fullUser={fullUser} />}
+            <Tab.Screen
+              name="Stores"
+              component={StoresScreen}
+              options={{
+                headerShown: false,
+                tabBarIcon: ({ color, size }) => (
+                  <AntDesign name="appstore-o" size={24} color="black" />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Rewards"
+              component={RewardsScreen}
+              options={{
+                headerShown: false,
+                tabBarIcon: ({ color, size }) => (
+                  <Octicons name="home" size={24} color="black" />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Profile"
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Feather name="user" size={24} color="black" />
+                ),
+              }}
+            >
+              {(props) => (
+                <ProfileScreen
+                  {...props}
+                  user={testUserString}
+                  fullUser={fullUser}
+                />
+              )}
             </Tab.Screen>
           </Tab.Navigator>
         </>

@@ -4,7 +4,10 @@ import MainNavigation from './screens/MainNavigation';
 // import { useFonts } from "expo-font";
 // import { useEffect } from "react";
 // import SignupScreen from "./screens/SignupScreen";
-// import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import { NativeBaseProvider } from "native-base";
+
+const queryClient = new QueryClient()
 
 export default function App() {
   // const [loaded] = useFonts({
@@ -26,9 +29,11 @@ export default function App() {
 
   return (
       <Provider store={store}>
-        {/* <QueryClientProvider client={queryClient}> */}
-          <MainNavigation />  
-        {/* </QueryClientProvider> */}
+        <QueryClientProvider client={queryClient}>
+          <NativeBaseProvider>
+            <MainNavigation />  
+          </NativeBaseProvider>
+        </QueryClientProvider>
     </Provider>
   );
 }

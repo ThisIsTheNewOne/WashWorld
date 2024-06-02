@@ -18,10 +18,13 @@ import { NotificationsScreen } from "./ProfileModals/NotificationsScreen";
 import { MembershipScreen } from "./ProfileModals/MembershipScreen";
 import UserIcon from "../../assets/svg/User";
 import Notification from "../../assets/svg/Notification";
-import { User } from "../../store/userSlice";
+import { Role, User } from "../../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfilePicture } from "../../store/profilePhotoSlice";
 import { AppDispatch, RootState } from "../../store/store";
+import { useQuery } from "@tanstack/react-query";
+import { UserQueries2 } from "../../userQuery/user.queries";
+import UsersRoleTypes from "./TypeUsers";
 
 interface ProfileScreenProps
   extends NativeStackScreenProps<RootStackParamList> {
@@ -36,6 +39,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
 }) => {
   const currentUser = user ? user : "Guest";
   const [signInModalVisible, setSignInModalVisible] = useState(false);
+  const [userRole, setUserRole] = useState(false);
+  const [userRoleAdmin, setUserRoleAdmin] = useState(false);
   const [notificationsModalVisible, setNotificationsModalVisible] =
     useState(false);
   const [membershipModalVisible, setMembershipModalVisible] = useState(false);
@@ -71,14 +76,23 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
     },
   ];
 
-
   useEffect(() => {
     if (fullUser !== null) {
-        const userId = String(fullUser.id); 
-        console.log("this is it bro", userId)
-        dispatch(getProfilePicture(userId));
+      const userId = String(fullUser.id);
+      console.log("this is it bro", userId);
+      dispatch(getProfilePicture(userId));
     }
-}, [dispatch, fullUser]);
+  }, [dispatch, fullUser]);
+
+  const setRoles = (type: string) => {
+    if (type === "Premium") {
+      setUserRole(!userRole);
+      setUserRoleAdmin(false);
+    } else {
+      setUserRole(false);
+      setUserRoleAdmin(!userRoleAdmin);
+    }
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -191,16 +205,22 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
           />
         </Modal>
 
-        {/* <Modal
-          visible={notificationsModalVisible}
-          onRequestClose={() => setNotificationsModalVisible(false)}
-        >
-          <NotificationsScreen />
+        <View>
           <Button
-            title="Close"
-            onPress={() => setNotificationsModalVisible(false)}
+            title="Make User Premium"
+            onPress={() => setRoles("Premium")}
           />
-        </Modal> */}
+          {userRole && fullUser !== null && (
+            <UsersRoleTypes fullUser={fullUser} type={Role.PremiumUser} />
+          )}
+        </View>
+
+        <View>
+          <Button title="Make User Admin" onPress={() => setRoles("Admin")} />
+          {userRoleAdmin && fullUser !== null && (
+            <UsersRoleTypes fullUser={fullUser} type={Role.Admin} />
+          )}
+        </View>
         <AppVersion />
       </>
     </View>
